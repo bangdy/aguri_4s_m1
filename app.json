@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "aguri_4s_m1",
+    "slug": "aguri_4s_m1",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "aguri_4s_m1"
+}
