@@ -18,7 +18,9 @@ export default function Header(props) {
       borderRadius={10}
       borderWidth={1}
       borderColor="gray.400">
-      <Heading size="sm">{yoil2[dayjs(date).day()]}</Heading>
+      <Heading size="sm" color={[0, 6].includes(dayjs(date).day()) ? "red.400" : null}>
+        {yoil2[dayjs(date).day()]}
+      </Heading>
       <Heading size="xs">{dayjs(date).month() + 1}</Heading>
       <Heading size="xs">{dayjs(date).date()}</Heading>
     </VStack>
