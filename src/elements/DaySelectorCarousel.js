@@ -9,32 +9,37 @@ import dayjs from "dayjs";
 const PAGE_WIDTH = Dimensions.get("window").width;
 
 export default function WeekScroll() {
+  const [prevIndex, setPrevIndex] = useState(1);
+  const [infinityWeekArray, setInfinityWeekArray] = useState([-1, 0, 1]);
+  const arrLength = infinityWeekArray.length;
   const today = new Date();
-  // const [selectedWeekSunday, setSelectedWeekSunday] = useState(dayjs(today).add(dayjs(today).day(), "day"));
-  //Carousel 할 때, 양쪽으로 week 을 추가해주는 개수
-  const numberOfWeeks = 20;
-  const startSunday = dayjs(today).add(dayjs(today).day(), "day");
-  const weeks = [
-    ...Array(numberOfWeeks)
-      .fill(0)
-      .map((_, i) => dayjs(startSunday).add(-i - 1, "week"))
-      .reverse(),
-    dayjs(startSunday),
-    ...Array(numberOfWeeks)
-      .fill(0)
-      .map((_, i) => dayjs(startSunday).add(i + 1, "week")),
-  ];
+  const startSunday = dayjs(today).add(-dayjs(today).day(), "day");
 
   return (
     <>
       <Carousel
         loop
         style={{ width: "100%" }}
-        data={weeks}
+        data={infinityWeekArray.map((value) => dayjs(startSunday).add(value, "week"))}
+        onProgressChange={(offsetProgress, absoluteProgress) => {
+          // console.log("🚀 ~ file: DaySelectorCarousel.js:49 ~ WeekScroll ~ offsetProgress", absoluteProgress);
+        }}
         height={80}
         width={PAGE_WIDTH}
-        defaultIndex={numberOfWeeks}
-        onSnapToItem={(index) => {}}
+        defaultIndex={1}
+        onSnapToItem={(currentIndex) => {
+          const diff = currentIndex - prevIndex;
+          const tempArr = [...infinityWeekArray];
+          if ([2, -1].includes(diff)) {
+            // - direction
+            tempArr[(currentIndex - 1 + arrLength) % arrLength] = tempArr[currentIndex] - 1;
+          } else {
+            // + direction
+            tempArr[(currentIndex + 1) % arrLength] = tempArr[currentIndex] + 1;
+          }
+          setPrevIndex(currentIndex);
+          setInfinityWeekArray(tempArr);
+        }}
         renderItem={({ item }) => {
           return <DaySelector date={item} />;
         }}
