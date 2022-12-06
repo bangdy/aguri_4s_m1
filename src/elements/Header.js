@@ -6,7 +6,7 @@ import React from "react";
 export default function DayBox() {
   return (
     <>
-      <HStack justifyContent="space-between" alignItems="center" h="10%">
+      <HStack justifyContent="space-between" alignItems="center" h="12%" mt={8}>
         <Box ml={2}>
           <Ionicons name="menu" size={32} color="black" />
         </Box>
