@@ -8,23 +8,26 @@ import dayjs from "dayjs";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 
-export default function WeekScroll() {
+export default function WeekScroll(props) {
   const [prevIndex, setPrevIndex] = useState(1);
   const [infinityWeekArray, setInfinityWeekArray] = useState([-1, 0, 1]);
   const arrLength = infinityWeekArray.length;
   const today = new Date();
   const startSunday = dayjs(today).add(-dayjs(today).day(), "day");
 
+  const { forRef, selectedDay } = props;
+
   return (
     <>
       <Carousel
         loop
+        ref={forRef}
         style={{ width: "100%" }}
         data={infinityWeekArray.map((value) => dayjs(startSunday).add(value, "week"))}
         onProgressChange={(offsetProgress, absoluteProgress) => {
           // console.log("🚀 ~ file: DaySelectorCarousel.js:49 ~ WeekScroll ~ offsetProgress", absoluteProgress);
         }}
-        height={80}
+        height={90}
         width={PAGE_WIDTH}
         defaultIndex={1}
         onSnapToItem={(currentIndex) => {
@@ -41,7 +44,7 @@ export default function WeekScroll() {
           setInfinityWeekArray(tempArr);
         }}
         renderItem={({ item }) => {
-          return <DaySelector date={item} />;
+          return <DaySelector date={item} selectedDay={selectedDay} />;
         }}
       />
       <Divider mt={2} />
