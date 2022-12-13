@@ -1,5 +1,5 @@
 // import { StatusBar } from "expo-status-bar";
-import { Button, Divider, Heading, ScrollView, VStack } from "native-base";
+import { Divider, ScrollView, VStack } from "native-base";
 import React, { useRef, useState } from "react";
 
 import DayBox from "../elements/DayBox";
@@ -9,10 +9,8 @@ import { Task } from "../help/factory";
 import TaskWithCarousel from "../elements/TaskWithCarousel";
 import Tickle from "../elements/Tickle";
 import WeekCarousel from "../elements/WeekCarousel";
-import WeekContainer from "../elements/WeekContainer";
 
 export default function Main() {
-  const ref = useRef(null);
   const [selectedDay, setSelctedDay] = useState(new Date());
   const [infinityWeekArray, setInfinityWeekArray] = useState([-1, 0, 1]);
   const [prevIndex, setPrevIndex] = useState(1);
