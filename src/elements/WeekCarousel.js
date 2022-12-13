@@ -1,8 +1,6 @@
-import { Divider, FlatList, HStack, View } from "native-base";
-import React, { useState } from "react";
-
 import Carousel from "react-native-reanimated-carousel";
 import { Dimensions } from "react-native";
+import React from "react";
 import WeekContainer from "./WeekContainer";
 import dayjs from "dayjs";
 import { infinityWeekCallback } from "../help/util";
@@ -35,6 +33,7 @@ export default function WeekCarousel(props) {
       height={90}
       width={PAGE_WIDTH}
       defaultIndex={1}
+      scrollAnimationDuration={200}
       onSnapToItem={(currentIndex) => {
         const isMinusDirection = infinityWeekCallback({
           currentIndex,
@@ -45,10 +44,9 @@ export default function WeekCarousel(props) {
         });
         if (otherCarousels) {
           if (isMinusDirection) {
-            otherCarousels.forEach((obj) => obj.current.prev());
-          } else {
-            otherCarousels.forEach((obj) => obj.current.next());
+            //animation 효과를 줘야 할 때 쓰자
           }
+          otherCarousels.forEach((obj) => obj.current.scrollTo({ index: currentIndex }));
         }
       }}
       renderItem={({ item }) => {
