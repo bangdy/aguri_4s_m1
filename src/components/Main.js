@@ -17,7 +17,8 @@ export default function Main() {
 
   const t1 = new Task("a", "Vitamin");
   const t2 = new Task("b", "Read a book");
-  const tasks = [t1, t2];
+  const t3 = new Task("c", "Check parent medicine");
+  const tasks = [t1, t2, t3];
   const refs = [];
 
   return (
