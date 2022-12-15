@@ -3,7 +3,6 @@ import { Divider, ScrollView, VStack } from "native-base";
 import React, { useRef, useState } from "react";
 
 import DayBox from "../elements/DayBox";
-import Footer from "../elements/Footer";
 import Header from "../elements/Header";
 import { Task } from "../help/factory";
 import TaskWithCarousel from "../elements/TaskWithCarousel";
@@ -24,7 +23,7 @@ export default function Main() {
   return (
     <VStack flex={1} h="100%" bgColor="gray.100" justifyContent="space-between">
       <Header />
-      <VStack h="70%" alignItems="center">
+      <VStack h="85%" alignItems="center">
         <WeekCarousel
           selectedDay={selectedDay}
           infinityWeekArray={infinityWeekArray}
@@ -56,7 +55,6 @@ export default function Main() {
           })}
         </ScrollView>
       </VStack>
-      <Footer />
     </VStack>
   );
 }
