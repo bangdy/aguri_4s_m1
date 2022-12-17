@@ -6,7 +6,7 @@ import React from "react";
 export default function TickleTypeSelectButton(props) {
   const { moduleName, taskCollector } = props;
   return (
-    <Pressable onPress={() => props.navigation.navigate("TaskCreator", taskCollector)}>
+    <Pressable onPress={() => props.navigation.navigate("TaskCreator", { taskCollector })}>
       <HStack
         justifyContent="space-between"
         alignItems="center"

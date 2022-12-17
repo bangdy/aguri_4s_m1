@@ -28,7 +28,7 @@ export default function WeekCarousel(props) {
       {...props}
       loop
       ref={(el) => {
-        // 실제 task 만 ref Array 에 넣기 위한
+        // 실제 task 만 ref Array 에 넣기 위함
         if (forwardedRef && !forwardedRef.current?.[index]) {
           forwardedRef.current = [...forwardedRef.current, el];
         }

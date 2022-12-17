@@ -1,5 +1,4 @@
-// import { StatusBar } from "expo-status-bar";
-import { Button, Divider, PresenceTransition, Pressable, ScrollView, VStack, useDisclose } from "native-base";
+import { Divider, PresenceTransition, Pressable, ScrollView, VStack, useDisclose } from "native-base";
 import React, { useEffect, useRef, useState } from "react";
 
 import { BlurView } from "@react-native-community/blur";
@@ -13,15 +12,16 @@ import TickleTypeSelectButton from "../elements/TickleTypeSelectButton";
 import WeekCarousel from "../elements/WeekCarousel";
 import { getItemFromAsync } from "../help/util";
 import { trackerArray } from "../constants/naming";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Main(props) {
   const [selectedDay, setSelctedDay] = useState(new Date());
   const [infinityWeekArray, setInfinityWeekArray] = useState([-1, 0, 1]);
   const [prevIndex, setPrevIndex] = useState(1);
+  const isFocused = useIsFocused();
 
   const [taskCollector, setTaskCollector] = useState([]);
   const refs = useRef([]);
-  console.log("🚀 ~ file: Main.js:24 ~ Main ~ refs", refs);
 
   const { isOpen, onToggle, onClose } = useDisclose();
 
@@ -30,21 +30,19 @@ export default function Main(props) {
   useEffect(() => {
     const fetchTasks = async () => {
       const result = await getItemFromAsync("myRoutine");
-      setTaskCollector(result);
+      const tasks = result.map(({ detail, taskId, title }) => {
+        const t = new Task({ detail, taskId, title });
+        return t;
+      });
+      setTaskCollector(tasks);
     };
     fetchTasks();
-  }, []);
+    onClose();
+  }, [isFocused]);
 
   return (
     <VStack flex={1} h="100%" bgColor="gray.100" justifyContent="space-between">
       <Header onToggle={onToggle} />
-      <Button
-        colorScheme="primary"
-        onPress={() => {
-          console.log(refs);
-        }}>
-        Primary
-      </Button>
       <VStack h="85%" alignItems="center">
         <WeekCarousel
           selectedDay={selectedDay}
@@ -71,6 +69,9 @@ export default function Main(props) {
                 setPrevIndex={setPrevIndex}
                 DayItem={Tickle}
                 task={task}
+                taskCollector={taskCollector}
+                setTaskCollector={setTaskCollector}
+                {...props}
               />
             );
           })}

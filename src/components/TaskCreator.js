@@ -1,18 +1,28 @@
-import { Box, Button, Divider, HStack, Input, VStack } from "native-base";
-import React, { useState } from "react";
+import { Box, Button, Divider, HStack, Input, VStack, useDisclose } from "native-base";
+import React, { useEffect, useState } from "react";
 
 import { DAY_WIDTH_IN_WEEK } from "../constants/layout";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Task } from "../help/factory";
 import { setItemToAsync } from "../help/util";
+import { useIsFocused } from "@react-navigation/core";
 
 export default function TaskCreator(props) {
   const [title, setTitle] = useState(null);
   const [detail, setDetail] = useState(null);
+  const isFocused = useIsFocused();
 
   const task = new Task({ title, detail });
 
-  const taskCollector = props.route.params;
+  const params = props.route.params;
+  const currentIsForUpdate = params?.task;
+
+  useEffect(() => {
+    if (currentIsForUpdate) {
+      setTitle(params.task.title);
+      setDetail(params.task.detail);
+    }
+  }, [isFocused]);
 
   return (
     <VStack flex={1} h="100%" justifyContent="flex-start" alignItems="center">
@@ -30,10 +40,16 @@ export default function TaskCreator(props) {
           variant="ghost"
           onPress={async () => {
             if (title && detail) {
-              const result = await setItemToAsync("myRoutine", [...taskCollector, task]);
-              if (result) {
-                props.navigation.goBack();
+              if (!currentIsForUpdate) {
+                // task 를 신규로 생성하는 경우
+                await setItemToAsync("myRoutine", [...params.taskCollector, task]);
+              } else {
+                // task 이름을 바꾸는 겨우
+                const temp = [...params.taskCollector];
+                temp[params.index] = task;
+                await setItemToAsync("myRoutine", temp);
               }
+              props.navigation.goBack();
             }
           }}>
           Create
@@ -48,6 +64,7 @@ export default function TaskCreator(props) {
             placeholder="Untitled"
             size="2xl"
             fontSize={32}
+            value={title}
             onChangeText={(t) => setTitle(t)}
           />
         </HStack>
@@ -63,6 +80,7 @@ export default function TaskCreator(props) {
             placeholder="Add details"
             size="2xl"
             fontSize={24}
+            value={detail}
             onChangeText={(t) => setDetail(t)}
           />
         </HStack>
