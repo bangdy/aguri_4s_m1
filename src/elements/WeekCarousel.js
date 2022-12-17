@@ -11,7 +11,7 @@ export default function WeekCarousel(props) {
   const today = new Date();
   const startSunday = dayjs(today).add(-dayjs(today).day(), "day");
   const {
-    forRef,
+    forwardedRef,
     selectedDay,
     infinityWeekArray,
     setInfinityWeekArray,
@@ -20,13 +20,19 @@ export default function WeekCarousel(props) {
     DayItem,
     otherCarousels,
     task,
+    index,
   } = props;
 
   return (
     <Carousel
       {...props}
       loop
-      ref={forRef}
+      ref={(el) => {
+        // 실제 task 만 ref Array 에 넣기 위한
+        if (forwardedRef && !forwardedRef.current?.[index]) {
+          forwardedRef.current = [...forwardedRef.current, el];
+        }
+      }}
       style={{ width: "100%" }}
       data={infinityWeekArray.map((value) => dayjs(startSunday).add(value, "week"))}
       onProgressChange={(offsetProgress, absoluteProgress) => {}}
@@ -46,7 +52,7 @@ export default function WeekCarousel(props) {
           if (isMinusDirection) {
             //animation 효과를 줘야 할 때 쓰자
           }
-          otherCarousels.forEach((obj) => obj.current.scrollTo({ index: currentIndex }));
+          otherCarousels.current.forEach((obj) => obj.scrollTo({ index: currentIndex }));
         }
       }}
       renderItem={({ item }) => {
