@@ -10,7 +10,7 @@ export default function WeekContainer(props) {
       {Array(7)
         .fill(0)
         .map((item, i) => (
-          <DayItem date={dayjs(date).add(i, "day")} key={i} selectedDay={selectedDay} task={task} />
+          <DayItem {...props} date={dayjs(date).add(i, "day")} key={i} selectedDay={selectedDay} task={task} />
         ))}
     </HStack>
   );

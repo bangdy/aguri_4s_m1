@@ -52,7 +52,7 @@ export default function TaskCreator(props) {
               props.navigation.goBack();
             }
           }}>
-          Create
+          {currentIsForUpdate ? "Update" : "Create"}
         </Button>
       </HStack>
       <VStack w="100%" justifyContent="center" alignItems="center" mt={8}>

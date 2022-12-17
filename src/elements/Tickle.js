@@ -4,15 +4,17 @@ import React, { useState } from "react";
 import { DAY_WIDTH_IN_WEEK } from "../constants/layout";
 import { dateIdGenerator } from "../help/util";
 import dayjs from "dayjs";
+import { setItemToAsync } from "../help/util";
 
 export default function Tickle(props) {
-  const { date, selectedDay, task } = props;
+  const { date, selectedDay, task, taskCollector } = props;
   const [checked, setChecked] = useState(Object.keys(task.checkedCollector).includes(dateIdGenerator(date)));
   return (
     <Pressable
-      onPress={() => {
+      onPress={async () => {
         const checkedCollector = task.updateCheck(date);
         setChecked(Object.keys(checkedCollector).includes(dateIdGenerator(date)));
+        await setItemToAsync("myRoutine", taskCollector);
       }}>
       <VStack
         w={DAY_WIDTH_IN_WEEK}

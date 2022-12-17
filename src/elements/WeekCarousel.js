@@ -56,7 +56,7 @@ export default function WeekCarousel(props) {
         }
       }}
       renderItem={({ item }) => {
-        return <WeekContainer DayItem={DayItem} date={item} selectedDay={selectedDay} task={task} />;
+        return <WeekContainer {...props} DayItem={DayItem} date={item} selectedDay={selectedDay} task={task} />;
       }}
     />
   );
