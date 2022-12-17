@@ -1,12 +1,12 @@
-import { HStack, Heading, Pressable, VStack } from "native-base";
+import { Box, HStack, Heading, Pressable } from "native-base";
 
 import { DAY_WIDTH_IN_WEEK } from "../constants/layout";
 import React from "react";
 
 export default function TickleTypeSelectButton(props) {
-  const { moduleName } = props;
+  const { moduleName, taskCollector } = props;
   return (
-    <Pressable>
+    <Pressable onPress={() => props.navigation.navigate("TaskCreator", taskCollector)}>
       <HStack
         justifyContent="space-between"
         alignItems="center"
@@ -19,7 +19,7 @@ export default function TickleTypeSelectButton(props) {
         <Heading size="xs" fontWeight={400} mr={4}>
           {moduleName}
         </Heading>
-        <VStack
+        <Box
           w={DAY_WIDTH_IN_WEEK * 0.8}
           h={DAY_WIDTH_IN_WEEK * 0.8}
           py={2}
@@ -28,7 +28,8 @@ export default function TickleTypeSelectButton(props) {
           borderColor="gray.300"
           borderWidth={0.5}
           justifyContent="center"
-          alignItems="center"></VStack>
+          alignItems="center"
+        />
       </HStack>
     </Pressable>
   );

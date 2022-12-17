@@ -1,9 +1,10 @@
 import { dateIdGenerator } from "./util";
 
 export class Task {
-  constructor(taskId, title) {
-    this.taskId = taskId;
+  constructor({ title, detail }) {
+    this.taskId = new Date().valueOf();
     this.title = title;
+    this.detail = detail;
     this.checkedCollector = {}; // key : taskTickleId , value : {checkTime : Date Object, comment : string }
   }
 
