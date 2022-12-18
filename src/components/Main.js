@@ -30,11 +30,13 @@ export default function Main(props) {
   useEffect(() => {
     const fetchTasks = async () => {
       const result = await getItemFromAsync("myRoutine");
-      const tasks = result.map(({ detail, taskId, title, checkedCollector }) => {
-        const t = new Task({ detail, taskId, title, checkedCollector });
-        return t;
-      });
-      setTaskCollector(tasks);
+      if (result) {
+        const tasks = result.map(({ detail, taskId, title, checkedCollector }) => {
+          const t = new Task({ detail, taskId, title, checkedCollector });
+          return t;
+        });
+        setTaskCollector(tasks);
+      }
     };
     fetchTasks();
     onClose();
