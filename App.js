@@ -1,15 +1,14 @@
-import { Box, NativeBaseProvider } from "native-base";
-import { StyleSheet, Text, View } from "react-native";
-
-import Main from "./src/components/Main";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { NativeBaseProvider } from "native-base";
 import Navigation from "./src/navigations";
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <Navigation />
-    </NativeBaseProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NativeBaseProvider>
+        <Navigation />
+      </NativeBaseProvider>
+    </GestureHandlerRootView>
   );
 }
