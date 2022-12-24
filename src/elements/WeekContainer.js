@@ -1,4 +1,3 @@
-import DayBox from "./DayBox";
 import { HStack } from "native-base";
 import React from "react";
 import dayjs from "dayjs";
